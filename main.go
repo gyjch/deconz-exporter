@@ -115,6 +115,30 @@ var (
 		Name:      "pressure",
 		Help:      "Air pressure in hectopascal (hPa)",
 	}, labels)
+	powerMetric = promauto.NewGaugeVec(prometheus.GaugeOpts{
+        Namespace: "deconz",
+        Subsystem: "sensor",
+        Name:      "power",
+        Help:      "Power in Watts (W)",
+	}, labels)
+	currentMetric = promauto.NewGaugeVec(prometheus.GaugeOpts{
+        Namespace: "deconz",
+        Subsystem: "sensor",
+        Name:      "current",
+        Help:      "Current in milliamps (mA)",
+	}, labels)
+	voltageMetric = promauto.NewGaugeVec(prometheus.GaugeOpts{
+        Namespace: "deconz",
+        Subsystem: "sensor",
+        Name:      "voltage",
+        Help:      "Voltage in Volts (V) you know. Volt_age...",
+	}, labels)
+	consumptionMetric = promauto.NewGaugeVec(prometheus.GaugeOpts{
+        Namespace: "deconz",
+        Subsystem: "sensor",
+        Name:      "consumption",
+        Help:      "Power consumption in Watthours (Wh)",
+	}, labels)
 	lastUpdMetric = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: "deconz",
 		Subsystem: "sensor",
@@ -157,6 +181,12 @@ func recordMetrics() {
 						humidMetric.With(labels).Set(float64(sensor.State.Humidity) / 100.0)
 					case "ZHAPressure":
 						pressureMetric.With(labels).Set(float64(sensor.State.Pressure))
+					case "ZHAPower":
+						powerMetric.With(labels).Set(float64(sensor.State.Power))
+						currentMetric.With(labels).Set(float64(sensor.State.Current))
+						voltageMetric.With(labels).Set(float64(sensor.State.Voltage))
+					case "ZHAConsumption":
+						consumptionMetric.With(labels).Set(float64(sensor.State.Consumption))
 					}
 
 					collectArbitraryData(sensor, labels)

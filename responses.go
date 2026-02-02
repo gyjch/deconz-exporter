@@ -19,6 +19,10 @@ type Sensor struct {
 		Temperature int    `json:"temperature"`
 		Humidity    int    `json:"humidity"`
 		Pressure    int    `json:"pressure"`
+		Power    	int    `json:"power"`
+		Consumption int    `json:"consumption"`
+		Voltage 	int    `json:"voltage"`
+		Current		int    `json:"current"`
 	} `json:"state"`
 	Swversion string `json:"swversion"`
 	Type      string `json:"type"`

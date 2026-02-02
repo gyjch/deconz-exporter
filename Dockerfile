@@ -1,4 +1,4 @@
-FROM golang:1.13.8 AS build
+FROM golang:1.18 AS build
 ENV TOKEN=0 \
     PORT=2112 \
     DECONZ_HOST=localhost \
@@ -27,4 +27,4 @@ COPY --from=build /src/deconz-exporter /bin/deconz-exporter
 
 USER appuser:appuser
 ENTRYPOINT ["/bin/deconz-exporter"]
-EXPOSE ${PORT}
+EXPOSE 8081
